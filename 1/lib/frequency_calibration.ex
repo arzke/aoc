@@ -1,6 +1,7 @@
 defmodule FrequencyCalibration do
   def start() do
     diffs = File.read!("./lib/diffs.txt")
+    limit = 1
 
     parsed_diffs =
       diffs
@@ -11,8 +12,15 @@ defmodule FrequencyCalibration do
     |> Enum.sum()
     |> IO.puts()
 
-    parsed_diffs
-    |> Duplicate.find(1)
+    duplicate = parsed_diffs
+    |> Duplicate.find(limit)
+
+    case duplicate do
+      nil ->
+        IO.puts("No result found with limit set to #{limit}")
+      _ ->
+        IO.puts("Result found: #{duplicate}")
+    end
   end
 end
 
