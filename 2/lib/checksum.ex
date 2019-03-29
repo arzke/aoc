@@ -1,4 +1,11 @@
 defmodule Checksum do
+  def start() do
+    File.read!("./lib/values.txt")
+    |> String.split("\r\n")
+    |> compute
+    |> IO.puts()
+  end
+
   def compute(values) do
     values
     |> Enum.map(&Occurence.count(&1))
@@ -17,3 +24,5 @@ defmodule Checksum do
     doubles_total * triples_total
   end
 end
+
+Checksum.start()
