@@ -21,4 +21,20 @@ defmodule WordTest do
   test "when first string is bar and second string is bor it returns 1" do
     assert Word.distance("bar", "bor") == 1
   end
+
+  test "when list is empty it returns an empty list" do
+    assert Word.calculate_distances([]) === []
+  end
+
+  test "when there is only one value it returns an empty list" do
+    assert Word.calculate_distances(["foo"]) === []
+  end
+
+  test "it returns the distances for the passed values" do
+    assert Word.calculate_distances(["faa", "foo", "for"]) === [
+      {"foo", "for", 1},
+      {"faa", "for", 2},
+      {"faa", "foo", 2},
+    ]
+  end
 end
