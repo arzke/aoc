@@ -1,9 +1,23 @@
 defmodule Checksum do
   def start() do
-    File.read!("./lib/values.txt")
-    |> String.split("\r\n")
+    values = File.read!("./lib/values.txt")
+    |> String.split("\n")
+
+    values
     |> compute
     |> IO.puts()
+
+    [{string1, string2, _} | _] = values
+    |> Word.calculate_distances()
+    |> Enum.filter(fn {_, _, distance} -> distance === 1 end)
+    
+    letters1 = String.graphemes(string1)
+    letters2 = String.graphemes(string2)
+
+    letters_in_common = letters1 -- (letters1 -- letters2)
+    |> List.to_string()
+    
+    IO.puts("Letters in common: #{letters_in_common}")
   end
 
   def compute(values) do
